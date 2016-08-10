@@ -3,14 +3,16 @@
   angular.module('ngBlog')
           .controller('SimpleController', SimpleController);
 
-  SimpleController.$inject = ['$scope', 'UserService'];
+  SimpleController.$inject = ['$scope', 'UserService', 'PostService', 'CommentService'];
 
-  function SimpleController($scope, UserService){
+  function SimpleController($scope, UserService, PostService, CommentService){
     $scope.message = 'Hey! Angular Works!';
+    var postId = '57a3c62cdd2539ea73cfb546';
+
 
     UserService.getAllUsers()
                 .then(function(response){
-                  console.log(response);
+                  console.log("getAllUsers: ", response);
                 });
     var userObj = {
       firstName: 'Lil',
@@ -20,7 +22,17 @@
     };
     UserService.createUser(userObj)
                 .then(function(response){
-                  console.log(response);
+                  console.log("Create User: ", response);
                 });
+
+  PostService.getAllPosts()
+              .then(function(response){
+                console.log("getAllposts: ", response);
+              });
+
+  CommentService.getComments(postId)
+                  .then(function(response){
+                    console.log('Comments: ',response);
+                  });
   }
 })();
